@@ -3,6 +3,8 @@
 
 .packages
 .pub/
+.idea/
+.unicorndialer/
 
 build/
 ios/.generated/

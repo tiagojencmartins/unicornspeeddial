@@ -2,12 +2,7 @@
 
 Easily create your own floating action button list
 
-![alt text](https://github.com/tiagojencmartins/unicornspeeddial/blob/master/vertical.gif?raw=true)
-
-![alt text](https://github.com/tiagojencmartins/unicornspeeddial/blob/master/horizontal.gif?raw=true)
-
-
-## Installing
+### Installing
 
 Add UnicornDialer to your **pubspec.yaml**
 
@@ -15,31 +10,23 @@ Add UnicornDialer to your **pubspec.yaml**
 unicorndialer: "0.0.1"
 ```
 
-## Options ##
+###Options###
 
 **UnicornDialer class**
 
-`int orientation` - **Vertical or horizontal floating button list**
-
+`int orientation` -** Vertical or horizontal floating button list**
  `bool rotateMain` - **Animate your main floating button icon**
-
 ` Icon parentButton` - **The main floating button icon**
-
 ` parentButtonBackground` - **The main floating button background color**
-
  `List<UnicornButton> childButtons` **Floating button list**
-
  `int animationDuration` **Rotation and expanding animation duration (in milliseconds)**
-
- `double childPadding` - **Right padding on the button label**
-
- `Function onMainButtonPressed` - **To be called if set on the UnicornDialer parent widget**
+ `double childPadding` ** List button padding**
+ `Function onMainButtonPressed` ** To be called if set on the UnicornDialer parent widget**
 
  **UnicornButton class**
 
  `Chip label` - **Creates a label for the current floating button**
-
- `FloatingActionButton currentButton` - **Floating list button **
+ `FloatingActionButton currentButton` - ** Floating list button **
 
 
  ## Example ##
