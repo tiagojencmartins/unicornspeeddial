@@ -5,12 +5,39 @@ class UnicornOrientation {
   static const VERTICAL = 1;
 }
 
-class UnicornButton {
+class UnicornButtonInherit extends InheritedWidget {
+  final Function onTap;
+  final bool isCollapsed;
+
+  const UnicornButtonInherit({
+    Key key,
+    this.onTap,
+    this.isCollapsed,
+    @required Widget child,
+  })  : assert(child != null),
+        super(key: key, child: child);
+
+  static UnicornButtonInherit of(BuildContext context) {
+    return context.inheritFromWidgetOfExactType(UnicornButtonInherit);
+  }
+
+  @override
+  bool updateShouldNotify(InheritedWidget oldWidget) {
+    return true;
+  }
+}
+
+class UnicornButton extends StatelessWidget {
   final FloatingActionButton currentButton;
   final Chip label;
 
   UnicornButton({this.currentButton, this.label})
       : assert(currentButton != null);
+
+  @override
+  Widget build(BuildContext context) {
+    return this.currentButton;
+  }
 }
 
 class UnicornDialer extends StatefulWidget {
@@ -25,13 +52,13 @@ class UnicornDialer extends StatefulWidget {
 
   UnicornDialer(
       {this.parentButton,
-        this.parentButtonBackground,
-        this.childButtons,
-        this.onMainButtonPressed,
-        this.rotateMain = true,
-        this.orientation = 1,
-        this.animationDuration = 300,
-        this.childPadding = 4.0})
+      this.parentButtonBackground,
+      this.childButtons,
+      this.onMainButtonPressed,
+      this.rotateMain = true,
+      this.orientation = 1,
+      this.animationDuration = 300,
+      this.childPadding = 4.0})
       : assert(parentButton != null);
 
   _UnicornDialer createState() => _UnicornDialer();
@@ -51,6 +78,11 @@ class _UnicornDialer extends State<UnicornDialer>
 
   @override
   Widget build(BuildContext context) {
+    final collapsedState = UnicornButtonInherit.of(context);
+    if (collapsedState.isCollapsed && widget.rotateMain) {
+      this._animationController.reverse();
+    }
+
     Widget mainFloatingButton = widget.parentButton;
     if (widget.rotateMain) {
       mainFloatingButton = AnimatedBuilder(
@@ -76,16 +108,16 @@ class _UnicornDialer extends State<UnicornDialer>
               ),
               child: widget.childButtons[index].label != null
                   ? Row(
-                mainAxisSize: MainAxisSize.min,
-                mainAxisAlignment: MainAxisAlignment.end,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[
-                  Padding(
-                      padding: EdgeInsets.only(right: 5.0),
-                      child: widget.childButtons[index].label),
-                  widget.childButtons[index].currentButton
-                ],
-              )
+                      mainAxisSize: MainAxisSize.min,
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: <Widget>[
+                        Padding(
+                            padding: EdgeInsets.only(right: 5.0),
+                            child: widget.childButtons[index].label),
+                        widget.childButtons[index].currentButton
+                      ],
+                    )
                   : widget.childButtons[index].currentButton));
     });
 
@@ -108,12 +140,12 @@ class _UnicornDialer extends State<UnicornDialer>
 
     return widget.orientation == UnicornOrientation.VERTICAL
         ? Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.end,
-        children: speedDialWidget)
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: speedDialWidget)
         : Row(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: speedDialWidget);
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: speedDialWidget);
   }
 }
