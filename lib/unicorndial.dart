@@ -52,14 +52,16 @@ class UnicornDialer extends StatefulWidget {
 
   UnicornDialer(
       {this.parentButton,
-      this.parentButtonBackground,
-      this.childButtons,
-      this.onMainButtonPressed,
-      this.rotateMain = true,
-      this.orientation = 1,
-      this.animationDuration = 300,
-      this.childPadding = 4.0})
-      : assert(parentButton != null);
+        this.parentButtonBackground,
+        this.childButtons,
+        this.onMainButtonPressed,
+        this.rotateMain = true,
+        this.orientation = 1,
+        this.animationDuration = 300,
+        this.childPadding = 4.0})
+      : assert(parentButton != null),
+        assert(childButtons != null),
+        assert(childButtons.length > 0);
 
   _UnicornDialer createState() => _UnicornDialer();
 }
@@ -67,13 +69,28 @@ class UnicornDialer extends StatefulWidget {
 class _UnicornDialer extends State<UnicornDialer>
     with TickerProviderStateMixin {
   AnimationController _animationController;
+  Animation<double> _childAnimation;
+  var isChildOpen = false;
 
   @override
   void initState() {
-    super.initState();
     this._animationController = AnimationController(
-        vsync: this,
-        duration: Duration(milliseconds: widget.animationDuration));
+        vsync: this, duration: Duration(milliseconds: widget.animationDuration))
+      ..addListener(() {
+        this.isChildOpen = !this._animationController.isDismissed;
+        setState(() {
+          this.isChildOpen;
+        });
+      });
+
+    this._childAnimation = Tween<double>(
+        begin: 0.0,
+        end: -50.0)
+        .animate(CurvedAnimation(
+        parent: this._animationController,
+        curve: Interval(0.0, 0.75, curve: Curves.easeIn)));
+
+    super.initState();
   }
 
   @override
@@ -99,26 +116,35 @@ class _UnicornDialer extends State<UnicornDialer>
           padding: widget.orientation == UnicornOrientation.VERTICAL
               ? EdgeInsets.only(bottom: widget.childPadding, right: 4.0)
               : EdgeInsets.only(left: widget.childPadding),
-          child: ScaleTransition(
-              alignment: FractionalOffset.center,
-              scale: new CurvedAnimation(
-                parent: this._animationController,
-                curve: new Interval(0.0, 1.0 - index / 20.0 / 2.0,
-                    curve: Curves.easeOut),
-              ),
-              child: widget.childButtons[index].label != null
+          child: Transform(
+              transform: Matrix4.translationValues(
+                  widget.orientation == UnicornOrientation.HORIZONTAL
+                      ? this._childAnimation.value *
+                      ((widget.childButtons.length - index))
+                      : 0.0,
+                  widget.orientation == UnicornOrientation.VERTICAL
+                      ? this._childAnimation.value *
+                      ((widget.childButtons.length - index))
+                      : 0.0,
+                  0.0),
+              child: widget.childButtons[index].label != null &&
+                  widget.orientation == UnicornOrientation.VERTICAL
                   ? Row(
-                      mainAxisSize: MainAxisSize.min,
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: <Widget>[
-                        Padding(
-                            padding: EdgeInsets.only(right: 5.0),
-                            child: widget.childButtons[index].label),
-                        widget.childButtons[index].currentButton
-                      ],
-                    )
-                  : widget.childButtons[index].currentButton));
+                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: <Widget>[
+                  this.isChildOpen
+                      ? Padding(
+                      padding: EdgeInsets.only(bottom: 6.0),
+                      child: widget.childButtons[index].label)
+                      : Container(),
+                  widget.childButtons[index].currentButton
+                ],
+              )
+                  : Padding(
+                  padding: EdgeInsets.only(bottom: 4.0, right: widget.orientation == UnicornOrientation.VERTICAL ? 0.0 : 6.0),
+                  child: widget.childButtons[index].currentButton)));
     });
 
     var speedDialWidget = childButtonsList.toList()
@@ -131,21 +157,20 @@ class _UnicornDialer extends State<UnicornDialer>
                 }
 
                 if (widget.rotateMain) {
-                  this._animationController.isDismissed
-                      ? this._animationController.forward()
-                      : this._animationController.reverse();
+                  if (this._animationController.isDismissed) {
+                    this._animationController.forward();
+                  } else {
+                    this._animationController.reverse();
+                  }
                 }
               },
               child: mainFloatingButton)));
 
-    return widget.orientation == UnicornOrientation.VERTICAL
-        ? Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.end,
-            children: speedDialWidget)
-        : Row(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: speedDialWidget);
+    return Stack(
+        alignment: FractionalOffset.bottomRight,
+        //mainAxisSize: MainAxisSize.min,
+        //crossAxisAlignment: CrossAxisAlignment.end,
+        //mainAxisAlignment: MainAxisAlignment.end,
+        children: speedDialWidget);
   }
 }

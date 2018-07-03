@@ -48,6 +48,6 @@ class _Example extends State<Example> {
                 childButtons: ChildButtons
             )),
         appBar: AppBar(),
-        body: Text("hi"));
+        body: Center(child: FlutterLogo(size: 100.0)));
   }
 }
