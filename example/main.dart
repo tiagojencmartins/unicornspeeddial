@@ -10,10 +10,9 @@ class Example extends StatefulWidget {
 class _Example extends State<Example> {
   var isCollapsed = false;
 
-  Function onChildTap() {
-    this.isCollapsed = true;
+  Function onActionButtonTap({bool status}) {
     setState(() {
-      this.isCollapsed;
+      this.isCollapsed = status == null ? !this.isCollapsed : status;
     });
   }
 
@@ -24,29 +23,37 @@ class _Example extends State<Example> {
     ChildButtons.add(UnicornButton(
         label: Chip(
             backgroundColor: Colors.redAccent,
-            label: Text("Add new", style: TextStyle(color: Colors.white))),
+            label: Text("Choo choo", style: TextStyle(color: Colors.white))),
         currentButton: FloatingActionButton(
+          backgroundColor: Colors.redAccent,
           mini: true,
-          child: Icon(Icons.people),
+          child: Icon(Icons.train),
           onPressed: () {
-            onChildTap();
+            onActionButtonTap(status: true);
           },
         )));
 
     ChildButtons.add(UnicornButton(
-        currentButton:
-        FloatingActionButton(mini: true, child: Icon(Icons.home))));
+        currentButton: FloatingActionButton(
+            backgroundColor: Colors.greenAccent,
+            mini: true,
+            child: Icon(Icons.airplanemode_active))));
+
+    ChildButtons.add(UnicornButton(
+        currentButton: FloatingActionButton(
+            backgroundColor: Colors.blueAccent,
+            mini: true,
+            child: Icon(Icons.directions_car))));
 
     return Scaffold(
         floatingActionButton: UnicornButtonInherit(
-            onTap: onChildTap,
+            onTap: onActionButtonTap,
             isCollapsed: this.isCollapsed,
             child: UnicornDialer(
                 parentButtonBackground: Colors.redAccent,
                 orientation: UnicornOrientation.VERTICAL,
                 parentButton: Icon(Icons.add),
-                childButtons: ChildButtons
-            )),
+                childButtons: ChildButtons)),
         appBar: AppBar(),
         body: Center(child: FlutterLogo(size: 100.0)));
   }
