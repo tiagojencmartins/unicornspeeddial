@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:unicorndial/unicorndial.dart';
 
-void main() => runApp(new MaterialApp(home: Example()));
+void main() =>
+    runApp(new MaterialApp(debugShowCheckedModeBanner: false, home: Example()));
 
 class Example extends StatefulWidget {
   _Example createState() => _Example();
@@ -25,6 +26,7 @@ class _Example extends State<Example> {
             backgroundColor: Colors.redAccent,
             label: Text("Choo choo", style: TextStyle(color: Colors.white))),
         currentButton: FloatingActionButton(
+          heroTag: "train",
           backgroundColor: Colors.redAccent,
           mini: true,
           child: Icon(Icons.train),
@@ -35,12 +37,14 @@ class _Example extends State<Example> {
 
     ChildButtons.add(UnicornButton(
         currentButton: FloatingActionButton(
+            heroTag: "airplane",
             backgroundColor: Colors.greenAccent,
             mini: true,
             child: Icon(Icons.airplanemode_active))));
 
     ChildButtons.add(UnicornButton(
         currentButton: FloatingActionButton(
+            heroTag: "directions",
             backgroundColor: Colors.blueAccent,
             mini: true,
             child: Icon(Icons.directions_car))));
@@ -50,8 +54,9 @@ class _Example extends State<Example> {
             onTap: onActionButtonTap,
             isCollapsed: this.isCollapsed,
             child: UnicornDialer(
+                backgroundColor: Color.fromRGBO(255, 255, 255, 0.6),
                 parentButtonBackground: Colors.redAccent,
-                orientation: UnicornOrientation.VERTICAL,
+                orientation: UnicornOrientation.HORIZONTAL,
                 parentButton: Icon(Icons.add),
                 childButtons: ChildButtons)),
         appBar: AppBar(),

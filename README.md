@@ -12,7 +12,7 @@ Easily create your own floating action button list
 Add UnicornDialer to your **pubspec.yaml**
 
 ```
-unicorndialer: "^1.0.5"
+unicorndialer: "^1.0.6"
 ```
 
 ## Options ##
@@ -20,6 +20,8 @@ unicorndialer: "^1.0.5"
 **UnicornDialer class**
 
 `int orientation` - **Vertical or horizontal floating button list**
+
+`Color backgroundColor` - **Modal background color**
 
 ` Icon parentButton` - **The main floating button icon**
 

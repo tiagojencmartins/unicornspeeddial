@@ -47,6 +47,7 @@ class UnicornDialer extends StatefulWidget {
   final List<UnicornButton> childButtons;
   final int animationDuration;
   final double childPadding;
+  final Color backgroundColor;
   final Function onMainButtonPressed;
 
   UnicornDialer(
@@ -55,6 +56,7 @@ class UnicornDialer extends StatefulWidget {
         this.childButtons,
         this.onMainButtonPressed,
         this.orientation = 1,
+        this.backgroundColor = Colors.redAccent,
         this.animationDuration = 180,
         this.childPadding = 4.0})
       : assert(parentButton != null),
@@ -111,6 +113,14 @@ class _UnicornDialer extends State<UnicornDialer>
         });
 
     var childButtonsList = List.generate(widget.childButtons.length, (index) {
+      var intervalValue = index == 0
+          ? 0.9
+          : ((widget.childButtons.length - index) /
+          widget.childButtons.length) -
+          0.2;
+
+      intervalValue = intervalValue < 0.0 ? (1 / index) * 0.5 : intervalValue ;
+
       return Positioned(
           right: widget.orientation == UnicornOrientation.VERTICAL
               ? 15.0
@@ -124,33 +134,25 @@ class _UnicornDialer extends State<UnicornDialer>
                     ? 18.0
                     : 15.0,
                 right: widget.orientation == UnicornOrientation.VERTICAL
-                    ? 0.0
+                    ? 4.0
                     : 15.0),
             child: Row(children: [
               ScaleTransition(
                   scale: CurvedAnimation(
                     parent: this._animationController,
-                    curve: Interval(
-                        ((widget.childButtons.length - index) /
-                            widget.childButtons.length) -
-                            0.2,
-                        1.0,
-                        curve: Curves.linear),
+                    curve: Interval(intervalValue, 1.0, curve: Curves.linear),
                   ),
                   alignment: FractionalOffset.center,
                   child: (widget.childButtons[index].label == null) ||
                       widget.orientation == UnicornOrientation.HORIZONTAL
                       ? Container()
-                      : widget.childButtons[index].label),
+                      : Padding(
+                      padding: EdgeInsets.only(right: widget.childPadding),
+                      child: widget.childButtons[index].label)),
               ScaleTransition(
                   scale: CurvedAnimation(
                     parent: this._animationController,
-                    curve: Interval(
-                        ((widget.childButtons.length - index) /
-                            widget.childButtons.length) -
-                            0.2,
-                        1.0,
-                        curve: Curves.linear),
+                    curve: Interval(intervalValue, 1.0, curve: Curves.linear),
                   ),
                   alignment: FractionalOffset.center,
                   child: widget.childButtons[index].currentButton)
@@ -168,6 +170,26 @@ class _UnicornDialer extends State<UnicornDialer>
                   onPressed: mainActionButtonOnPressed,
                   child: mainFloatingButton))));
 
-    return unicornDialWidget;
+    var modal = ScaleTransition(
+        scale: CurvedAnimation(
+          parent: this._animationController,
+          curve: Interval(1.0, 1.0, curve: Curves.linear),
+        ),
+        alignment: FractionalOffset.center,
+        child: GestureDetector(
+            onTap: mainActionButtonOnPressed,
+            child: Container(
+              color: widget.backgroundColor,
+              width: MediaQuery.of(context).size.width,
+              height: MediaQuery.of(context).size.height,
+            )));
+
+    return Stack(
+        alignment: Alignment.topCenter,
+        overflow: Overflow.visible,
+        children: [
+          Positioned(right: -16.0, bottom: -16.0, child: modal),
+          unicornDialWidget
+        ]);
   }
 }
