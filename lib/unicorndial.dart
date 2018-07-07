@@ -147,7 +147,7 @@ class _UnicornDialer extends State<UnicornDialer>
 
       return Positioned(
           right: widget.orientation == UnicornOrientation.VERTICAL
-              ? 15.0
+              ? 0.0
               : ((widget.childButtons.length - index) * 55.0),
           bottom: widget.orientation == UnicornOrientation.VERTICAL
               ? ((widget.childButtons.length - index) * 55.0)
@@ -156,7 +156,7 @@ class _UnicornDialer extends State<UnicornDialer>
             padding: EdgeInsets.only(
                 bottom: widget.orientation == UnicornOrientation.VERTICAL
                     ? 18.0
-                    : 7.0,
+                    : 4.0,
                 right: widget.orientation == UnicornOrientation.VERTICAL
                     ? 4.0
                     : 15.0),
