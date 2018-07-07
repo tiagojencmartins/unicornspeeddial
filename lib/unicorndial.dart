@@ -1,30 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:vector_math/vector_math_64.dart' as vector;
 
 class UnicornOrientation {
   static const HORIZONTAL = 0;
   static const VERTICAL = 1;
-}
-
-class UnicornButtonInherit extends InheritedWidget {
-  final Function onTap;
-  final bool isCollapsed;
-
-  const UnicornButtonInherit({
-    Key key,
-    this.onTap,
-    this.isCollapsed,
-    @required Widget child,
-  })  : assert(child != null),
-        super(key: key, child: child);
-
-  static UnicornButtonInherit of(BuildContext context) {
-    return context.inheritFromWidgetOfExactType(UnicornButtonInherit);
-  }
-
-  @override
-  bool updateShouldNotify(UnicornButtonInherit oldWidget) {
-    return oldWidget.isCollapsed != this.isCollapsed;
-  }
 }
 
 class UnicornButton extends StatelessWidget {
@@ -69,14 +48,19 @@ class UnicornDialer extends StatefulWidget {
 class _UnicornDialer extends State<UnicornDialer>
     with TickerProviderStateMixin {
   AnimationController _animationController;
+  AnimationController _parentController;
+
   bool isOpen = false;
-  bool triggered = false;
+  bool triggerParentAnimation = false;
 
   @override
   void initState() {
     this._animationController = AnimationController(
-        vsync: this, duration: Duration(milliseconds: widget.animationDuration))
-      ..addListener(() {});
+        vsync: this,
+        duration: Duration(milliseconds: widget.animationDuration));
+
+    this._parentController =
+        AnimationController(vsync: this, duration: Duration(milliseconds: 200));
 
     super.initState();
   }
@@ -97,9 +81,26 @@ class _UnicornDialer extends State<UnicornDialer>
 
   @override
   Widget build(BuildContext context) {
-    final collapsedState = UnicornButtonInherit.of(context);
-    if (collapsedState.isCollapsed) {
-      mainActionButtonOnPressed();
+    if (this._parentController.value == 1.0 && this.triggerParentAnimation) {
+      this._parentController.reverse().then((s) {
+        this._parentController.forward();
+      });
+    } else if (this._parentController.value == 1.0 &&
+        !this.triggerParentAnimation) {
+      this.triggerParentAnimation = true;
+      this._parentController.forward().then((s) {
+        this._parentController.reverse().then((s) {
+          this._parentController.forward();
+        });
+      });
+    } else {
+      if (!this.triggerParentAnimation && this._parentController.value == 0.0) {
+        this.triggerParentAnimation = true;
+        this._parentController.reverse().then((s) {
+          this._parentController.forward();
+        });
+      } else
+        this.triggerParentAnimation = false;
     }
 
     Widget mainFloatingButton = widget.parentButton;
@@ -119,7 +120,30 @@ class _UnicornDialer extends State<UnicornDialer>
           widget.childButtons.length) -
           0.2;
 
-      intervalValue = intervalValue < 0.0 ? (1 / index) * 0.5 : intervalValue ;
+      intervalValue = intervalValue < 0.0 ? (1 / index) * 0.5 : intervalValue;
+
+      var childFAB = FloatingActionButton(
+          onPressed: () {
+            if (widget.childButtons[index].currentButton.onPressed != null) {
+              widget.childButtons[index].currentButton.onPressed();
+            }
+
+            this._animationController.reverse();
+          },
+          child: widget.childButtons[index].currentButton.child,
+          heroTag: widget.childButtons[index].currentButton.heroTag,
+          backgroundColor:
+          widget.childButtons[index].currentButton.backgroundColor,
+          mini: true,
+          tooltip: widget.childButtons[index].currentButton.tooltip,
+          key: widget.childButtons[index].currentButton.key,
+          elevation: widget.childButtons[index].currentButton.elevation,
+          foregroundColor:
+          widget.childButtons[index].currentButton.foregroundColor,
+          highlightElevation:
+          widget.childButtons[index].currentButton.highlightElevation,
+          isExtended: widget.childButtons[index].currentButton.isExtended,
+          shape: widget.childButtons[index].currentButton.shape);
 
       return Positioned(
           right: widget.orientation == UnicornOrientation.VERTICAL
@@ -132,7 +156,7 @@ class _UnicornDialer extends State<UnicornDialer>
             padding: EdgeInsets.only(
                 bottom: widget.orientation == UnicornOrientation.VERTICAL
                     ? 18.0
-                    : 15.0,
+                    : 7.0,
                 right: widget.orientation == UnicornOrientation.VERTICAL
                     ? 4.0
                     : 15.0),
@@ -155,7 +179,7 @@ class _UnicornDialer extends State<UnicornDialer>
                     curve: Interval(intervalValue, 1.0, curve: Curves.linear),
                   ),
                   alignment: FractionalOffset.center,
-                  child: widget.childButtons[index].currentButton)
+                  child: childFAB)
             ]),
           ));
     });
@@ -163,12 +187,22 @@ class _UnicornDialer extends State<UnicornDialer>
     var unicornDialWidget = Stack(
         children: childButtonsList.toList()
           ..add(Positioned(
-              right: 12.0,
-              bottom: 12.0,
-              child: FloatingActionButton(
-                  backgroundColor: widget.parentButtonBackground,
-                  onPressed: mainActionButtonOnPressed,
-                  child: mainFloatingButton))));
+              right: 0.0,
+              bottom: 0.0,
+              child: AnimatedBuilder(
+                  animation: this._parentController,
+                  builder: (BuildContext context, Widget child) {
+                    return Transform(
+                        transform: new Matrix4.diagonal3(vector.Vector3(
+                            _parentController.value,
+                            _parentController.value,
+                            _parentController.value)),
+                        alignment: FractionalOffset.center,
+                        child: FloatingActionButton(
+                            backgroundColor: widget.parentButtonBackground,
+                            onPressed: mainActionButtonOnPressed,
+                            child: mainFloatingButton));
+                  }))));
 
     var modal = ScaleTransition(
         scale: CurvedAnimation(
