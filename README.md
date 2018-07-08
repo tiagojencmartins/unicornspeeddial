@@ -12,7 +12,7 @@ Easily create your own floating action button list
 Add UnicornDialer to your **pubspec.yaml**
 
 ```
-unicorndial: "^1.0.7"
+unicorndial: "^1.0.8"
 ```
 
 ## Options ##
@@ -25,7 +25,9 @@ unicorndial: "^1.0.7"
 
 ` Icon parentButton` - **The main floating button icon**
 
-` parentButtonBackground` - **The main floating button background color**
+` bool hasBackground` - **Background modal is set**
+
+` Color parentButtonBackground` - **The main floating button background color**
 
  `List<UnicornButton> childButtons` **Floating button list**
 
@@ -48,7 +50,7 @@ unicorndial: "^1.0.7"
 
 ## Authors
 
-* **Tiago Martins **
+**Tiago Martins**
 
 
 ## License
