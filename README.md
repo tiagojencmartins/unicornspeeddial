@@ -21,9 +21,15 @@ unicorndial: "^1.0.8"
 
 `int orientation` - **Vertical or horizontal floating button list**
 
+`Object parentHeroTag` - **Main FAB hero tag**
+
 `Color backgroundColor` - **Modal background color**
 
-` Icon parentButton` - **The main floating button icon**
+` Icon parentButton` - **Starting Icon**
+
+` Icon finalButtonIcon` - **Ending Icon (after animation is complete)**
+
+
 
 ` bool hasBackground` - **Background modal is set**
 

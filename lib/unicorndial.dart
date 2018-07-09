@@ -22,6 +22,7 @@ class UnicornButton extends StatelessWidget {
 class UnicornDialer extends StatefulWidget {
   final int orientation;
   final Icon parentButton;
+  final Icon finalButtonIcon;
   final bool hasBackground;
   final Color parentButtonBackground;
   final List<UnicornButton> childButtons;
@@ -29,6 +30,7 @@ class UnicornDialer extends StatefulWidget {
   final double childPadding;
   final Color backgroundColor;
   final Function onMainButtonPressed;
+  final Object parentHeroTag;
 
   UnicornDialer(
       {this.parentButton,
@@ -38,6 +40,8 @@ class UnicornDialer extends StatefulWidget {
         this.orientation = 1,
         this.hasBackground = true,
         this.backgroundColor = Colors.redAccent,
+        this.parentHeroTag = "parent",
+        this.finalButtonIcon,
         this.animationDuration = 180,
         this.childPadding = 4.0})
       : assert(parentButton != null);
@@ -102,10 +106,13 @@ class _UnicornDialer extends State<UnicornDialer>
     }
 
     var mainFAB = FloatingActionButton(
+        heroTag: widget.parentHeroTag,
         backgroundColor: widget.parentButtonBackground,
         onPressed: () {
           mainActionButtonOnPressed();
-          widget.onMainButtonPressed();
+          if (widget.onMainButtonPressed != null) {
+            widget.onMainButtonPressed();
+          }
         },
         child: !hasChildButtons
             ? widget.parentButton
@@ -118,7 +125,9 @@ class _UnicornDialer extends State<UnicornDialer>
                 alignment: FractionalOffset.center,
                 child: new Icon(this._animationController.isDismissed
                     ? widget.parentButton.icon
-                    : Icons.close),
+                    : widget.finalButtonIcon == null
+                    ? Icons.close
+                    : widget.finalButtonIcon.icon),
               );
             }));
 
