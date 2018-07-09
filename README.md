@@ -41,7 +41,7 @@ unicorndial: "^1.0.8"
 
  `Chip label` - **Creates a label for the current floating button**
 
- `FloatingActionButton currentButton` - **Floating list button **
+ `FloatingActionButton currentButton` - **Floating list button**
 
 
  ## Example ##
