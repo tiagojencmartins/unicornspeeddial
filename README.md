@@ -12,7 +12,7 @@ Easily create your own floating action button list
 Add UnicornDialer to your **pubspec.yaml**
 
 ```
-unicorndial: "^1.0.9"
+unicorndial: "^1.1.0"
 ```
 
 ## Options ##
@@ -29,8 +29,6 @@ unicorndial: "^1.0.9"
 
 ` Icon finalButtonIcon` - **Ending Icon (after animation is complete)**
 
-
-
 ` bool hasBackground` - **Background modal is set**
 
 ` Color parentButtonBackground` - **The main floating button background color**
@@ -43,15 +41,19 @@ unicorndial: "^1.0.9"
 
  `Function onMainButtonPressed` - **To be called if set on the UnicornDialer parent widget**
 
- **UnicornButton class**
 
- `Chip label` - **Creates a label for the current floating button**
+
+ **UnicornButton class**
 
  `FloatingActionButton currentButton` - **Floating list button **
 
-
- ## Example ##
-
+ `String labelText`
+ `double labelFontSize`
+ `Color labelColor`
+ `Color labelBackgroundColor`
+ `Color labelShadowColor` - **Label container shadow**
+ `bool labelHasShadow`
+ `bool hasLabel`
 
 
 ## Authors

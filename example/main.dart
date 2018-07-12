@@ -9,32 +9,29 @@ class Example extends StatefulWidget {
 }
 
 class _Example extends State<Example> {
-
   @override
   Widget build(BuildContext context) {
-    var ChildButtons = List<UnicornButton>();
+    var childButtons = List<UnicornButton>();
 
-    ChildButtons.add(UnicornButton(
-        label: Chip(
-            backgroundColor: Colors.redAccent,
-            label: Text("Choo choo", style: TextStyle(color: Colors.white))),
+    childButtons.add(UnicornButton(
+        hasLabel: true,
+        labelText: "Choo choo",
         currentButton: FloatingActionButton(
           heroTag: "train",
           backgroundColor: Colors.redAccent,
           mini: true,
           child: Icon(Icons.train),
-          onPressed: () {
-          },
+          onPressed: () {},
         )));
 
-    ChildButtons.add(UnicornButton(
+    childButtons.add(UnicornButton(
         currentButton: FloatingActionButton(
             heroTag: "airplane",
             backgroundColor: Colors.greenAccent,
             mini: true,
             child: Icon(Icons.airplanemode_active))));
 
-    ChildButtons.add(UnicornButton(
+    childButtons.add(UnicornButton(
         currentButton: FloatingActionButton(
             heroTag: "directions",
             backgroundColor: Colors.blueAccent,
@@ -47,7 +44,7 @@ class _Example extends State<Example> {
             parentButtonBackground: Colors.redAccent,
             orientation: UnicornOrientation.VERTICAL,
             parentButton: Icon(Icons.add),
-            childButtons: ChildButtons),
+            childButtons: childButtons),
         appBar: AppBar(),
         body: Center(child: RaisedButton(
           onPressed: () {
