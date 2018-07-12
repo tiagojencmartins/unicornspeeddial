@@ -48,11 +48,17 @@ unicorndial: "^1.1.0"
  `FloatingActionButton currentButton` - **Floating list button **
 
  `String labelText`
+
  `double labelFontSize`
+
  `Color labelColor`
+
  `Color labelBackgroundColor`
+
  `Color labelShadowColor` - **Label container shadow**
+
  `bool labelHasShadow`
+
  `bool hasLabel`
 
 
