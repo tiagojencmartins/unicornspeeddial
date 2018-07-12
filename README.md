@@ -45,7 +45,7 @@ unicorndial: "^1.1.0"
 
  **UnicornButton class**
 
- `FloatingActionButton currentButton` - **Floating list button **
+ `FloatingActionButton currentButton` - **Floating list button**
 
  `String labelText`
 
