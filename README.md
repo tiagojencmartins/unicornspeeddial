@@ -12,7 +12,7 @@ Easily create your own floating action button list
 Add UnicornDialer to your **pubspec.yaml**
 
 ```
-unicorndial: "^1.1.1"
+unicorndial: "^1.1.2"
 ```
 
 ## Options ##
@@ -40,6 +40,8 @@ unicorndial: "^1.1.1"
  `double childPadding` - **Right padding on the button label**
 
  `Function onMainButtonPressed` - **To be called if set on the UnicornDialer parent widget**
+
+ `bool hasNotch` - **BottomAppBar support**
 
 
 
