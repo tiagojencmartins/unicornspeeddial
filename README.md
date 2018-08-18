@@ -12,7 +12,7 @@ Easily create your own floating action button list
 Add UnicornDialer to your **pubspec.yaml**
 
 ```
-unicorndial: "^1.1.2"
+unicorndial: "^1.1.3"
 ```
 
 ## Options ##

@@ -86,7 +86,7 @@ class UnicornDialer extends StatefulWidget {
         this.finalButtonIcon,
         this.animationDuration = 180,
         this.childPadding = 4.0,
-        this.hasNotch = true})
+        this.hasNotch = false})
       : assert(parentButton != null);
 
   _UnicornDialer createState() => _UnicornDialer();
@@ -236,7 +236,7 @@ class _UnicornDialer extends State<UnicornDialer>
 
         return Positioned(
             right: widget.orientation == UnicornOrientation.VERTICAL
-                ? 9.0
+                ? 6.0
                 : ((widget.childButtons.length - index) * 55.0),
             bottom: widget.orientation == UnicornOrientation.VERTICAL
                 ? ((widget.childButtons.length - index) * 55.0)
