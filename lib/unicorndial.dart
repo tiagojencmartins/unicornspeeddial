@@ -54,7 +54,7 @@ class UnicornButton extends FloatingActionButton {
                     : this.labelColor)));
   }
 
-  @override
+
   Widget build(BuildContext context) {
     return this.currentButton;
   }
