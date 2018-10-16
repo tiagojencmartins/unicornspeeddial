@@ -68,6 +68,7 @@ class UnicornDialer extends StatefulWidget {
   final Color parentButtonBackground;
   final List<UnicornButton> childButtons;
   final int animationDuration;
+  final int mainAnimationDuration;
   final double childPadding;
   final Color backgroundColor;
   final Function onMainButtonPressed;
@@ -85,6 +86,7 @@ class UnicornDialer extends StatefulWidget {
         this.parentHeroTag = "parent",
         this.finalButtonIcon,
         this.animationDuration = 180,
+		this.mainAnimationDuration = 200,
         this.childPadding = 4.0,
         this.hasNotch = false})
       : assert(parentButton != null);
@@ -106,7 +108,7 @@ class _UnicornDialer extends State<UnicornDialer>
         duration: Duration(milliseconds: widget.animationDuration));
 
     this._parentController =
-        AnimationController(vsync: this, duration: Duration(milliseconds: 200));
+        AnimationController(vsync: this, duration: Duration(milliseconds: widget.mainAnimationDuration));
 
     super.initState();
   }
