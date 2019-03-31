@@ -26,6 +26,7 @@ class _Example extends State<Example> {
 
     childButtons.add(UnicornButton(
         currentButton: FloatingActionButton(
+            onPressed: () {},
             heroTag: "airplane",
             backgroundColor: Colors.greenAccent,
             mini: true,
@@ -33,6 +34,7 @@ class _Example extends State<Example> {
 
     childButtons.add(UnicornButton(
         currentButton: FloatingActionButton(
+            onPressed: () {},
             heroTag: "directions",
             backgroundColor: Colors.blueAccent,
             mini: true,
