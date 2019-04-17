@@ -6,7 +6,7 @@ class UnicornOrientation {
   static const VERTICAL = 1;
 }
 
-class UnicornButton2 extends FloatingActionButton {
+class UnicornButton extends FloatingActionButton {
   final FloatingActionButton currentButton;
   final String labelText;
   final double labelFontSize;
