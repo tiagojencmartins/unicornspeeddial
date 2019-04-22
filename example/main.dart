@@ -29,6 +29,7 @@ class _Example extends State<Example> {
             heroTag: "airplane",
             backgroundColor: Colors.greenAccent,
             mini: true,
+            onPressed: () {},
             child: Icon(Icons.airplanemode_active))));
 
     childButtons.add(UnicornButton(
@@ -36,6 +37,7 @@ class _Example extends State<Example> {
             heroTag: "directions",
             backgroundColor: Colors.blueAccent,
             mini: true,
+            onPressed: () {},
             child: Icon(Icons.directions_car))));
 
     return Scaffold(
