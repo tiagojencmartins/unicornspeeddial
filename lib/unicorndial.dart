@@ -237,9 +237,9 @@ class _UnicornDialer extends State<UnicornDialer>
         return Positioned(
           right: widget.orientation == UnicornOrientation.VERTICAL
               ? widget.childButtons[index].currentButton.mini ? 4.0 : 0.0
-              : ((widget.childButtons.length - index) * 55.0) + 15,
+              : ((widget.childButtons.length - index) * (widget.childButtons[index].currentButton.mini ? 55.0 : 70.0)) + 15,
           bottom: widget.orientation == UnicornOrientation.VERTICAL
-              ? ((widget.childButtons.length - index) * 55.0) + 15
+              ? ((widget.childButtons.length - index) * (widget.childButtons[index].currentButton.mini ? 55.0 : 70.0)) + 15
               : 8.0,
           child: Row(children: [
             ScaleTransition(
