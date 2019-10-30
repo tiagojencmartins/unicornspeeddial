@@ -29,6 +29,10 @@ double _endOffset(ScaffoldPrelayoutGeometry scaffoldGeometry, { double offset = 
 abstract class UnicornDialLocation extends FloatingActionButtonLocation {
   const UnicornDialLocation();
 
+  /// Modified version of [FloatingActionButtonLocation.endDocked] with specific logic
+  /// to deal with [UnicornDialer].
+  /// 
+  /// See [FloatingActionButtonLocation.endDocked] for more info.
   static const FloatingActionButtonLocation endDocked = _EndDockedUnicornDialLocation();
 }
 
