@@ -54,7 +54,6 @@ class UnicornButton extends FloatingActionButton {
                     : this.labelColor)));
   }
 
-
   Widget build(BuildContext context) {
     return this.currentButton;
   }
@@ -66,6 +65,7 @@ class UnicornDialer extends StatefulWidget {
   final Icon finalButtonIcon;
   final bool hasBackground;
   final Color parentButtonBackground;
+  final Color parentButtonForeground;
   final List<UnicornButton> childButtons;
   final int animationDuration;
   final int mainAnimationDuration;
@@ -78,6 +78,7 @@ class UnicornDialer extends StatefulWidget {
   UnicornDialer(
       {this.parentButton,
         this.parentButtonBackground,
+        this.parentButtonForeground,
         this.childButtons,
         this.onMainButtonPressed,
         this.orientation = 1,
@@ -163,6 +164,7 @@ class _UnicornDialer extends State<UnicornDialer>
                   isExtended: false,
                   heroTag: widget.parentHeroTag,
                   backgroundColor: widget.parentButtonBackground,
+                  foregroundColor: widget.parentButtonForeground,
                   onPressed: () {
                     mainActionButtonOnPressed();
                     if (widget.onMainButtonPressed != null) {
