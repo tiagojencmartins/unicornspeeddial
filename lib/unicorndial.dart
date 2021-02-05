@@ -130,7 +130,6 @@ class _UnicornDialer extends State<UnicornDialer>
 
   @override
   Widget build(BuildContext context) {
-    this._animationController.reverse();
 
     var hasChildButtons =
         widget.childButtons != null && widget.childButtons.length > 0;
