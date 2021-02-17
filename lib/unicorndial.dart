@@ -235,7 +235,8 @@ class _UnicornDialer extends State<UnicornDialer>
             highlightElevation: widget
                 .childButtons[index].currentButton.highlightElevation,
             isExtended:
-            widget.childButtons[index].currentButton.isExtended);
+            widget.childButtons[index].currentButton.isExtended,
+            shape: widget.childButtons[index].currentButton.shape);
 
         return Positioned(
           right: widget.orientation == UnicornOrientation.VERTICAL
