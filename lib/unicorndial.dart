@@ -4,6 +4,7 @@ import 'package:vector_math/vector_math_64.dart' as vector;
 class UnicornOrientation {
   static const HORIZONTAL = 0;
   static const VERTICAL = 1;
+  static const TOP = 2;
 }
 
 class UnicornButton extends FloatingActionButton {
