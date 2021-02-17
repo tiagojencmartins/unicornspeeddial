@@ -74,6 +74,7 @@ class UnicornDialer extends StatefulWidget {
   final Function onMainButtonPressed;
   final Object parentHeroTag;
   final bool hasNotch;
+  final ShapeBorder shapeButton;
 
   UnicornDialer(
       {this.parentButton,
@@ -86,9 +87,11 @@ class UnicornDialer extends StatefulWidget {
         this.parentHeroTag = "parent",
         this.finalButtonIcon,
         this.animationDuration = 180,
-		this.mainAnimationDuration = 200,
+		    this.mainAnimationDuration = 200,
         this.childPadding = 4.0,
-        this.hasNotch = false})
+        this.hasNotch = false,
+        this.shapeButton,
+      })
       : assert(parentButton != null);
 
   _UnicornDialer createState() => _UnicornDialer();
@@ -160,6 +163,7 @@ class _UnicornDialer extends State<UnicornDialer>
                   _parentController.value)),
               alignment: FractionalOffset.center,
               child: FloatingActionButton(
+                  shape: widget.shapeButton,
                   isExtended: false,
                   heroTag: widget.parentHeroTag,
                   backgroundColor: widget.parentButtonBackground,
