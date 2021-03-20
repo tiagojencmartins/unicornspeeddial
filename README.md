@@ -64,6 +64,65 @@ unicorndial: "^1.1.5"
  `bool hasLabel`
 
 
+## NestedFAB Support ##
+To use nested fab, check the following code
+
+```
+child: Scaffold(
+    ...
+    ...
+    // FloatingActionButton is a NestedFab which is a list of UnicornDialers
+    
+    floatingActionButton: NestedFab(
+    parentButtonBackground: Colors.grey[700],
+    orientation: UnicornOrientation.HORIZONTAL,
+    backgroundColor: Colors.black38,
+    parentButtonIcon: Icon(Icons.person),
+    children: _getProfileMenu(),
+    ),
+),
+
+
+List<UnicornDialer> _getProfileMenu() {
+  List<UnicornDialer> children = [
+    UnicornDialer(
+      parentButtonBackground: Colors.grey[700],
+      backgroundColor: Colors.transparent,
+      parentButton: Icon(Icons.add),
+      childButtons: [
+        FloatingActionButton(
+          backgroundColor: Colors.grey[700],
+          mini: true,
+          heroTag: "bankTag",
+          child: Icon(Icons.account_balance),
+          onPressed: () {
+            print("bank");
+          },
+        ),
+      ],
+    ),
+    UnicornDialer(
+      parentButtonBackground: Colors.grey[700],
+      backgroundColor: Colors.transparent,
+      parentButton: Icon(Icons.settings),
+      childButtons: [
+        FloatingActionButton(
+          backgroundColor: Colors.grey[700],
+          mini: true,
+          heroTag: "phoneTag",
+          child: Icon(Icons.phone),
+          onPressed: () {
+            print("phone");
+          },
+        ),
+      ],
+    )
+  ];
+  return children;
+}
+```
+
+
 ## Authors
 
 **Tiago Martins**
