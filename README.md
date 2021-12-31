@@ -1,4 +1,4 @@
-# UnicornDialer
+# UnicornDialer - :no_entry: [DEPRECATED]
 
 Easily create your own floating action button list
 
