@@ -62,8 +62,8 @@ class UnicornButton extends FloatingActionButton {
 
 class UnicornDialer extends StatefulWidget {
   final int orientation;
-  final Icon parentButton;
-  final Icon finalButtonIcon;
+  final Widget parentButton;
+  final Widget finalButtonIcon;
   final bool hasBackground;
   final Color parentButtonBackground;
   final List<UnicornButton> childButtons;
@@ -178,12 +178,11 @@ class _UnicornDialer extends State<UnicornDialer>
                           transform: new Matrix4.rotationZ(
                               this._animationController.value * 0.8),
                           alignment: FractionalOffset.center,
-                          child: new Icon(
-                              this._animationController.isDismissed
-                                  ? widget.parentButton.icon
+                          child: this._animationController.isDismissed
+				  ? widget.parentButton
                                   : widget.finalButtonIcon == null
-                                  ? Icons.close
-                                  : widget.finalButtonIcon.icon),
+                                  ? new Icon(Icons.close)
+			          : widget.finalButtonIcon
                         );
                       })));
         });
